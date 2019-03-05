@@ -15,7 +15,10 @@ import * as path from 'path';
 
 const errorHandler = require('koa-better-error-handler');
 const koa404Handler = require('koa-404-handler');
-const appRoot = __dirname.split(path.sep).slice(0,-1).join(path.sep);
+const appRoot = __dirname
+  .split(path.sep)
+  .slice(0, -1)
+  .join(path.sep);
 
 export const createServer = (): http.Server => {
   const app = new Koa();
@@ -48,10 +51,7 @@ export const createServer = (): http.Server => {
       jwt({
         secret: process.env.AUTH_SECRET || ''
       }).unless({
-        path: [
-          /^\/status-check/,
-          /^\//
-        ]
+        path: [/^\/status-check/, /^\//]
       })
     )
 
