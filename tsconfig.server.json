@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "types": [
+      "jest",
+      "jsonwebtoken",
+      "koa",
+      "koa-compress",
+      "koa-helmet",
+      "koa-router",
+      "koa__cors",
+      "koa-static",
+      "node",
+      "supertest"
+    ],
+    "experimentalDecorators": true,
+    "lib": ["dom", "es2017"],
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "outDir": "./build",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "include": [
+    "./src/server/"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
+}

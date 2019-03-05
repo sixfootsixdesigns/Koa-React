@@ -1,0 +1,49 @@
+version: 2
+
+jobs:
+    build:
+        working_directory: ~/koa_react
+        docker:
+            - image: circleci/node:10.15-browsers
+        steps:
+            - checkout
+            - run:
+                name: NPM Token
+                command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+            - run: yarn install
+            - run: yarn lint
+            - run: yarn test:client:ci
+            - run: yarn test:server:ci
+
+    deploy-prod:
+        working_directory: ~/koa_react
+        docker:
+            - image: circleci/node:10.11
+        steps:
+            - checkout
+            - run:
+                name: Setup Heroku
+                command: bash scripts/setup-heroku.sh
+            - run:
+                name: Deploy Production
+                command: git push heroku-prod master:master
+
+workflows:
+    version: 2
+
+    commit-workflow:
+        jobs:
+            - build
+
+    deploy-workflow:
+        jobs:
+            - build:
+                filters:
+                    branches:
+                        only: master
+            - deploy-prod:
+                requires:
+                    - build
+                filters:
+                    branches:
+                        only: master
