@@ -7,11 +7,9 @@ jobs:
             - image: circleci/node:10.15-browsers
         steps:
             - checkout
-            - run:
-                name: NPM Token
-                command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
             - run: yarn install
             - run: yarn lint
+            - run: yarn format:check
             - run: yarn test:client:ci
             - run: yarn test:server:ci
 
